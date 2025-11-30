@@ -1,0 +1,122 @@
+{{ define "main" }}
+
+<div class="container">
+    <h1 style="margin: 30px 0;">{{ .Title }}</h1>
+
+    <div class="filter-sort-bar">
+      <div class="sort">
+        <strong>Sắp xếp:</strong>
+        <a href="{{ .RelPermalink }}?sort=price_asc" class="sort-btn">Giá tăng</a>
+        <a href="{{ .RelPermalink }}?sort=price_desc" class="sort-btn">Giá giảm</a>
+        <a href="{{ .RelPermalink }}?sort=new" class="sort-btn">Mới nhất</a>
+      </div>
+
+    <div class="filter">
+        <strong>Lọc:</strong>
+
+        <a href="{{ "/categories/keyboard/" | relURL }}">Bàn phím</a>
+
+        <a href="{{ "/categories/switch/" | relURL }}">Switch</a>
+
+        <a href="{{ "/categories/keycap/" | relURL }}">Keycap</a>
+
+        <a href="{{ "/products/" | relURL }}">(Tất cả)</a>
+    </div>
+      
+    </div>
+
+</div>
+
+    <div class="product-grid" id="product-grid">
+      {{ range .Pages }}
+        {{ partial "product-cart.html" . }}
+      {{ end }} 
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Get URL Parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentSort = urlParams.get('sort');
+    const currentCat = urlParams.get('cat'); // Changed 'type' to 'cat' for clarity
+    const grid = document.getElementById('product-grid');
+
+    // === FUNCTION 1: Combine Links (The "Holy Grail" Logic) ===
+    function updateLinks() {
+        // Update Sort Buttons to keep current Category
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+            const btnSort = btn.getAttribute('href').match(/sort=([^&]*)/)[1];
+            let newHref = `?sort=${btnSort}`;
+            if (currentCat) newHref += `&cat=${currentCat}`;
+            btn.setAttribute('href', newHref);
+            
+            if (currentSort === btnSort) {
+                btn.style.fontWeight = 'bold';
+                btn.style.color = '#ff5722';
+            }
+        });
+
+        // Update Filter Buttons to keep current Sort
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (btn.getAttribute('href') === '?') return;
+            
+            const btnCat = btn.getAttribute('href').match(/cat=([^&]*)/)[1];
+            let newHref = `?cat=${btnCat}`;
+            if (currentSort) newHref += `&sort=${currentSort}`;
+            btn.setAttribute('href', newHref);
+
+            if (currentCat === btnCat) {
+                btn.style.fontWeight = 'bold';
+                btn.style.color = '#ff5722';
+            }
+        });
+    }
+    updateLinks();
+
+    // === FUNCTION 2: Filter Logic ===
+    if (!grid) return;
+    const products = Array.from(grid.getElementsByClassName('product-card'));
+
+    if (currentCat) {
+        products.forEach(product => {
+            const productCat = product.getAttribute('data-category');
+            // If category doesn't match, hide it
+            if (productCat && productCat !== currentCat) {
+                product.style.display = 'none';
+            }
+        });
+    }
+
+    // === FUNCTION 3: Sorting Logic ===
+    function getPrice(element) {
+        const priceRaw = element.getAttribute('data-price');
+        const priceClean = priceRaw ? priceRaw.replace(/[^0-9]/g, '') : 0; 
+        return parseFloat(priceClean) || 0;
+    }
+
+    if (currentSort === 'price_asc') {
+        products.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (currentSort === 'price_desc') {
+        products.sort((a, b) => getPrice(b) - getPrice(a));
+    } else if (currentSort === 'new') {
+        products.sort((a, b) => {
+            return b.getAttribute('data-date') - a.getAttribute('data-date');
+        });
+    }
+
+    // === FUNCTION 4: Render & Force Color ===
+    if (currentSort || currentCat) {
+        // Append sorted items (hidden ones stay hidden)
+        products.forEach(product => grid.appendChild(product));
+        
+        // Safety: Force Orange Color
+        document.querySelectorAll('.current-price').forEach(el => {
+            el.style.setProperty('color', '#ff5722', 'important');
+            el.style.fontWeight = 'bold';
+        });
+    }
+});
+</script>
+
+{{ end }}

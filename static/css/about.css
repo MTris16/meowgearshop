@@ -1,0 +1,105 @@
+/* Tiêu đề chính "Về chúng tôi" */
+
+h1 {
+    color: #FF5722; /* Cam Chủ Đạo */
+    border-bottom: 3px solid #FF9800; /* Gạch chân màu cam nhạt hơn */
+    display: inline-block; /* Chỉ gạch chân dưới chữ */
+}
+
+h2 {
+    color: #FF5722; /* Cam Chủ Đạo */
+    border-bottom: 3px solid #FF9800; /* Gạch chân màu cam nhạt hơn */
+    display: inline-block; /* Chỉ gạch chân dưới chữ */
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+/* Tiêu đề phụ (Sứ mệnh, Giá trị cốt lõi, Nhóm phát triển) */
+h3 {
+    color: #FF5722; /* Cam Chủ Đạo */
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+/* Làm nổi bật các từ khóa trong Giá trị cốt lõi (Chất lượng, Minh bạch, Tận tâm) */
+.core-value-item strong {
+    color: #FF9800; /* Cam Nhạt */
+    font-weight: bold;
+}
+
+/* Nút Tư vấn ngay */
+.contact-button { /* Dựa trên hình ảnh là nút màu đỏ, ta chuyển thành cam */
+    background-color: #FF5722; /* Cam Chủ Đạo */
+    color: #ffffff; /* Chữ Trắng */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 6px rgba(255, 87, 34, 0.5); /* Tạo bóng mờ cam */
+    transition: background-color 0.3s;
+}
+
+.contact-button:hover {
+    background-color: #E64A19; /* Cam đậm hơn khi hover */
+}
+
+/* Số điện thoại bên trong nút */
+.contact-button span.phone-number {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Các icon nổi bật bên góc phải */
+.floating-icon { /* Giả sử đây là class của icon */
+    background-color: #FF9800; /* Cam Nhạt */
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.floating-icon:hover {
+    background-color: #FF5722; /* Cam đậm khi hover */
+}
+
+/* Team grid */
+.team-intro{
+  margin-bottom: 14px;
+  color: var(--muted);
+}
+.team-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  align-items: start;
+}
+
+/* card */
+.team-card{
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(18,18,18,0.04);
+}
+.team-photo{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: block;
+}
+.team-card h3{
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: #111;
+}
+.team-card .role{
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.team-card .bio{
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.45;
+}

@@ -1,0 +1,70 @@
+{{ define "main" }}
+<div class="container">
+    
+    <div class="hero-section">
+        <h1 class="hero-title">Chào mừng đến với Meow Gear!</h1>
+        <p class="hero-subtitle">Cửa hàng bàn phím và phụ kiện yêu thích của bạn.</p>
+        <a href="/products" class="btn btn-primary" style="background: #fff; color: #ff5722; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px; display: inline-block;">Xem tất cả sản phẩm</a>
+    </div>
+
+    <section class="featured-products-section">
+        <h2 class="section-title">Sản phẩm nổi bật</h2>
+        {{ partial "product-slideshow.html" . }}
+        </section>
+
+</div> 
+
+<section class="reviews-section-wrapper">
+    <div class="container">
+        <h2 class="section-title" style="margin-bottom: 40px;">Khách hàng nói gì?</h2>
+        
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"Okê thằng iem"</p>
+                <div class="reviewer-info">
+                    <div class="avatar">T</div>
+                    <div class="name-box">
+                        <span class="name">Minh Trí</span>
+                        <span class="verified">Đã mua hàng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"Ngon"</p>
+                <div class="reviewer-info">
+                    <div class="avatar" style="background: #ff5722;">D</div>
+                    <div class="name-box">
+                        <span class="name">Phước Duy</span>
+                        <span class="verified">Đã mua hàng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="stars">★★★★☆</div>
+                <p class="review-text">"Tiểu nhị, cho 1 gáo nước mưa"</p>
+                <div class="reviewer-info">
+                    <div class="avatar" style="background: #28a745;">K</div>
+                    <div class="name-box">
+                        <span class="name">Hoàng Khang</span>
+                        <span class="verified">Đã mua hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <section class="other-links" style="margin-top: 50px; text-align: center;">
+        <h2 class="section-title">Thông tin hữu ích</h2>
+        <ul style="list-style: none; padding: 0;">
+            <li style="display: inline-block; margin: 0 15px;"><a href="/blog" style="color: #ff5722; font-weight: bold;">Đọc Blog</a></li>
+            <li style="display: inline-block; margin: 0 15px;"><a href="/contact" style="color: #ff5722; font-weight: bold;">Liên hệ</a></li>
+        </ul>
+    </section>
+</div>
+{{ end }} 

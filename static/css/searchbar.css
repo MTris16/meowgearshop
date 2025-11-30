@@ -1,0 +1,51 @@
+/* --- SEARCH BAR CSS --- */
+.search-box {
+    position: relative; /* Để định vị cái khung kết quả con bên trong */
+    margin-left: 20px;
+}
+
+#searchInput {
+    width: 180px; /* Bình thường nhỏ xíu */
+    padding: 6px 10px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    transition: width 0.4s ease-in-out;
+}
+
+/* Khi bấm chuột vào thì dài ra */
+#searchInput:focus {
+    width: 250px; /* Dài ra khi gõ */
+    border-color: #333; /* Đổi màu viền cho ngầu */
+}
+
+.search-results {
+    display: none; /* Mặc định ẩn */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    background: white;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 9999; /* Nổi lên trên cùng */
+    margin-top: 10px;
+}
+
+.search-item {
+    padding: 10px;
+    border-bottom: 1px solid #f5f5f5;
+    transition: 0.2s;
+}
+
+.search-item:hover {
+    background-color: #f9f9f9;
+}
+
+.search-item:last-child {
+    border-bottom: none;
+}

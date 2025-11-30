@@ -1,0 +1,221 @@
+{{ define "main" }}
+<div class="cart-container">
+    <h1>{{ .Title }}</h1>
+
+    <div id="cart-content-wrapper">
+        
+        <div class="cart-table-wrapper">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th class="th-product">Sản phẩm</th>
+                        <th class="th-price">Đơn giá</th>
+                        <th class="th-qty">Số lượng</th>
+                        <th class="th-total">Thành tiền</th>
+                        <th class="th-remove">Xóa</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                    </tbody>
+            </table>
+            
+            <a href="/products" class="back-to-shop">
+                <i class="fa-solid fa-arrow-left"></i> Tiếp tục mua sắm
+            </a>
+        </div>
+
+        <div class="cart-summary">
+            <h3>Cộng giỏ hàng</h3>
+            <div class="summary-line">
+                <span>Tạm tính:</span>
+                <span id="subtotal-price">0₫</span>
+            </div>
+            <div class="summary-line total-line">
+                <span>Tổng cộng:</span>
+                <span id="final-total-price">0₫</span>
+            </div>
+            <button class="checkout-button" onclick="window.location.href='{{ "/checkout/" | relURL }}'">THANH TOÁN</button>
+            <div style="margin-top: 15px; font-size: 12px; color: #777; text-align: center;">
+                <i class="fa-solid fa-shield-halved"></i> Bảo mật thanh toán 100%
+            </div>
+        </div>
+    </div>
+
+    <div id="empty-cart-msg" style="text-align: center; padding: 50px 0; display: none;">
+        <i class="fa-solid fa-basket-shopping" style="font-size: 60px; color: #ddd; margin-bottom: 20px;"></i>
+        <p style="font-size: 18px; color: #666;">Giỏ hàng của bạn đang trống.</p>
+        <a href="/products" style="color: #ff5722; text-decoration: underline; font-weight: bold;">Quay lại cửa hàng</a>
+    </div>
+</div>
+
+<script>
+function cleanPrice(priceString) {
+    const str = String(priceString); 
+    const cleanStr = str.replace(/₫/g, '').replace(/,/g, '').replace(/\./g, '').replace(/&nbsp;/g, '');
+    return parseFloat(cleanStr) || 0; 
+}
+function formatPrice(number) {
+    if (isNaN(number)) return '0₫';
+    return number.toLocaleString('vi-VN') + '₫';
+}
+
+document.addEventListener('DOMContentLoaded', function() { renderCart(); });
+
+function renderCart() {
+    const cart = JSON.parse(localStorage.getItem('myShopCart')) || [];
+    const tableBody = document.getElementById('cart-table-body');
+    const emptyMsg = document.getElementById('empty-cart-msg');
+    const contentWrapper = document.getElementById('cart-content-wrapper');
+
+    if (!tableBody) return;
+
+    if (cart.length === 0) {
+        if(emptyMsg) emptyMsg.style.display = 'block';
+        if(contentWrapper) contentWrapper.style.display = 'none';
+        updateCartTotals(0); 
+        return;
+    } else {
+        if(emptyMsg) emptyMsg.style.display = 'none';
+        if(contentWrapper) contentWrapper.style.display = 'flex';
+    }
+
+    let html = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const cleanItemPrice = cleanPrice(item.price);
+        let itemTotal = cleanItemPrice * item.quantity;
+        total += itemTotal;
+
+        html += `
+            <tr>
+                <td class="td-product">
+                    <a href="${item.id}" class="cart-item-link">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="p-name">${item.title}</div>
+                    </a>
+                </td>
+                <td class="td-price">${formatPrice(cleanItemPrice)}</td> 
+                <td class="td-qty">
+                    <input type="number" min="1" value="${item.quantity}" 
+                           onchange="updateQty(${index}, this.value)" 
+                           class="qty-input">
+                </td>
+                <td class="td-total">${formatPrice(itemTotal)}</td>
+                <td class="td-remove">
+                    <button onclick="removeItem(${index})" class="btn-remove">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+
+    tableBody.innerHTML = html;
+    updateCartTotals(total);
+}
+
+function updateCartTotals(total) {
+    const formattedTotal = formatPrice(total);
+    document.getElementById('subtotal-price').innerText = formattedTotal;
+    document.getElementById('final-total-price').innerText = formattedTotal;
+    if (typeof forceUpdateCart === 'function') forceUpdateCart();
+}
+
+function updateQty(index, newQty) {
+    let cart = JSON.parse(localStorage.getItem('myShopCart')) || [];
+    if (newQty < 1) newQty = 1;
+    cart[index].quantity = parseInt(newQty);
+    localStorage.setItem('myShopCart', JSON.stringify(cart));
+    renderCart();
+}
+
+function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem('myShopCart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('myShopCart', JSON.stringify(cart));
+    renderCart();
+}
+</script>
+
+<style>
+    .cart-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 60vh; }
+    h1 { margin-bottom: 30px; }
+    #cart-content-wrapper { display: flex; gap: 40px; align-items: flex-start; position: relative; }
+    .cart-table-wrapper { flex: 2; width: 100%; overflow-x: auto; }
+
+    /* TABLE STYLES */
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+        /* Removed fixed layout so columns can breathe */
+    }
+
+    th, td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
+    th { background: #f5f5f5; text-align: left; font-weight: 600; color: #444; white-space: nowrap; }
+
+    /* --- COLUMN WIDTH LOGIC --- */
+    
+    /* 1. Product Column: Takes all remaining space */
+    .th-product, .td-product {
+        width: auto; 
+        text-align: left;
+    }
+    
+    /* 2. Other Columns: Shrink to fit content (Never wrap) */
+    .th-price, .td-price,
+    .th-qty, .td-qty,
+    .th-total, .td-total,
+    .th-remove, .td-remove {
+        width: 1%; /* Trick to shrink column width */
+        white-space: nowrap; /* Force single line */
+        text-align: center;
+    }
+
+    /* Product Cell Details */
+    .cart-item-link {
+        display: flex; 
+        align-items: center; 
+        text-decoration: none; 
+        color: inherit;
+    }
+
+    .cart-item-link img {
+        width: 70px; height: 70px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;
+        flex-shrink: 0;
+    }
+    
+    .p-name {
+        font-weight: 500; font-size: 15px; line-height: 1.4;
+        color: #333;
+        /* Allow wrapping but keep it neat */
+        white-space: normal; 
+        min-width: 200px; /* Ensure it doesn't get too squashed */
+    }
+
+    /* Style adjustments for specific cells */
+    .td-total { font-weight: bold; color: #333; }
+    .qty-input { width: 50px; padding: 5px; border: 1px solid #ddd; border-radius: 4px; text-align: center; }
+    .btn-remove { background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 16px; }
+    
+    /* Summary Box */
+    .cart-summary { flex: 1; background: #f9f9f9; padding: 25px; border-radius: 8px; border: 1px solid #eee; position: sticky; top: 90px; min-width: 300px; }
+    .cart-summary h3 { margin-top: 0; border-bottom: 1px solid #ddd; padding-bottom: 15px; margin-bottom: 20px; }
+    .summary-line { display: flex; justify-content: space-between; margin-bottom: 12px; color: #555; }
+    .total-line { font-weight: bold; font-size: 20px; color: #333; border-top: 2px dashed #ddd; padding-top: 15px; margin-top: 15px; }
+    .total-line span:last-child { color: #ff5722; }
+    .checkout-button { width: 100%; padding: 15px; background: #ff5722; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+
+    @media (max-width: 900px) {
+        #cart-content-wrapper { flex-direction: column; }
+        .cart-summary { width: 100%; position: static; }
+        /* On mobile, let the table scroll horizontally */
+        .cart-table { display: block; overflow-x: auto; white-space: nowrap; }
+        .p-name { min-width: 150px; }
+    }
+</style>
+{{ end }}

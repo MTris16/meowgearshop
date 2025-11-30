@@ -1,0 +1,201 @@
+/* Slideshow container */
+.slideshow-container {
+  max-width: 800px;
+  position: relative;
+  margin: 40px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.mySlides { display: none; }
+
+.slide-content {
+    position: relative;
+    width: 100%;
+    height: 450px;
+}
+
+.slide-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Text Overlay Container */
+.text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  
+  /* IMPORTANT: Prevents padding from breaking width calculations */
+  box-sizing: border-box; 
+}
+
+/* Title Style - STRICT ONE-LINE FIX */
+.text-overlay h3 { 
+    margin: 0 0 5px 0; 
+    font-size: 20px; 
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    
+    /* === FORCE ONE LINE (Overrides everything) === */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    /* ============================================ */
+}
+
+/* --- PRICE STYLING --- */
+.slideshow-price-box {
+    margin-bottom: 15px;
+}
+
+/* The Current Price (Yellow/Gold) */
+.slide-price-new {
+    color: #ffc107; /* Gold Color */
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* The Old Price (Small Gray) */
+.slide-price-old {
+    color: #ccc;
+    text-decoration: line-through;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* --- BUTTONS (View Details) --- */
+.btn-shop {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: white;
+  padding: 8px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  display: inline-block;
+  transition: all 0.3s;
+}
+
+.btn-shop:hover { 
+    background-color: #ffc107; 
+    border-color: #ffc107;
+    color: #000;
+}
+
+/* --- NAVIGATION ARROWS --- */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  /* === SIZE FIX: 35px is small but clickable === */
+  width: 35px;
+  height: 35px;
+  font-size: 14px; /* Icon size */
+  /* ============================================= */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  text-decoration: none;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.prev:hover, .next:hover {
+  background-color: #ffc107;
+  color: #000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Dots */
+.dot-container { text-align:center; margin-top: 15px; }
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+.active, .dot:hover { background-color: #717171; }
+
+/* Fade Animation */
+.fade { animation-name: fade; animation-duration: 1.5s; }
+@keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+/* === CSS NÚT NEXT/PREV CÓ HIỆU ỨNG TRƯỢT === */
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    /* Mặc định ẩn đi */
+    opacity: 0; 
+    
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    
+    /* Hiệu ứng chuyển động mượt trong 0.4 giây */
+    transition: all 0.4s ease-in-out; 
+}
+
+/* Định vị nút TRÁI (Lúc chưa di chuột: nằm thụt sang trái 20px) */
+.prev { 
+    left: 10px; 
+    transform: translateY(-50%) translateX(-20px); 
+}
+
+/* Định vị nút PHẢI (Lúc chưa di chuột: nằm thụt sang phải 20px) */
+.next { 
+    right: 10px; 
+    transform: translateY(-50%) translateX(20px); 
+}
+
+/* === KHI DI CHUỘT VÀO KHUNG ẢNH === */
+/* 1. Nút hiện rõ lên */
+.main-image-wrapper:hover .nav-btn {
+    opacity: 1;
+}
+
+/* 2. Trượt nút về đúng vị trí (translateX về 0) */
+.main-image-wrapper:hover .prev,
+.main-image-wrapper:hover .next {
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Hiệu ứng khi di chuột lên chính cái nút đó (Đổi màu) */
+.nav-btn:hover {
+    background-color: #ff5722; /* Màu cam */
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}

@@ -1,0 +1,12 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Con meo ngu ngoc dang yeu"
+theme = ""
+enableRobotsTXT = true
+
+[params]
+  companyName = "Con meo ngu ngoc dang yeu"
+  description = "Your favorite store for keyboards and accessories"
+
+[outputs]
+  home = ["HTML", "JSON"]

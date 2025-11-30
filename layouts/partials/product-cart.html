@@ -1,0 +1,65 @@
+{{ $displayPrice := or .Params.price .Params.price_new }}
+{{ $sortPrice := replace (replace $displayPrice "₫" "") "." "" }}
+
+{{ $cat := "other" }}
+{{ if .Params.categories }}
+  {{ $cat = index .Params.categories 0 | lower }}
+{{ end }}
+
+<div class="product-card" 
+     data-price="{{ $sortPrice }}" 
+     data-date="{{ .Date.Unix }}"
+     data-category="{{ $cat }}"
+     style="height: 100%; background: #fff; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+     
+    <a href="{{ .RelPermalink }}" class="product-link" style="display: grid; grid-template-rows: 200px 1fr; height: 100%; text-decoration: none; color: inherit;">
+        
+        <div class="image-wrapper" style="position: relative; overflow: hidden;">
+            
+            {{ if .Params.images.main }}
+                <img src="{{ .Params.images.main | relURL }}" alt="{{ .Title }}" style="width: 100%; height: 100%; object-fit: cover;">
+            {{ else }}
+                <div class="no-image">No Image</div>
+            {{ end }}
+
+            <button class="btn-shopee-cart"
+                title="Thêm nhanh vào giỏ"
+                onclick="quickAdd(event, {
+                    id: '{{ .RelPermalink }}',
+                    title: '{{ .Title }}',
+                    price: {{ replace (replace .Params.price_new "." "") "₫" "" | default 0 }},
+                    image: '{{ .Params.images.main | relURL }}'
+                })">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                </svg>
+            </button>
+
+        </div>
+
+        <div class="product-info" style="padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+            
+            <h3 class="product-title" style="margin: 0 0 10px 0; font-size: 16px; font-weight: 500; color: #333; line-height: 1.4; height: auto; min-height: 45px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; white-space: normal;">
+                {{ .Title }}
+            </h3>
+            
+            <div class="price-box" style="margin-top: auto;">
+                <span class="current-price" style="color: #ff5722 !important; font-weight: bold; font-size: 1.1em;">
+                    {{ $displayPrice }}
+                    {{ if not (findRE "₫|đ" $displayPrice) }}₫{{ end }}
+                </span>
+
+                {{ if .Params.price_old }}
+                    <span class="old-price" style="text-decoration: line-through; color: #999; font-size: 0.85em; margin-left: 8px;">
+                        {{ .Params.price_old }}
+                    </span>
+                {{ end }}
+            </div>
+            
+        </div>
+    </a>
+</div>

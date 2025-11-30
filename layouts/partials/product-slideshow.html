@@ -1,0 +1,194 @@
+<div class="slideshow-container">
+  {{ range first 5 (where .Site.RegularPages "Section" "products") }}
+  
+  <div class="mySlides fade">
+    <div class="slide-content">
+      
+      {{ $img := "" }}
+      {{ if .Params.image }}
+        {{ $img = .Params.image }}
+      {{ else if .Params.images }}
+         {{ if .Params.images.main }}
+            {{ $img = .Params.images.main }}
+         {{ end }}
+      {{ end }}
+      
+      <img src="{{ $img | relURL }}" alt="{{ .Title }}">
+      
+      <div class="text-overlay">
+        
+        <h3 class="slide-title">{{ .Title }}</h3>
+        
+        <div class="slideshow-price-box">
+            {{ $finalPrice := or .Params.price .Params.price_new }}
+            
+            {{ if $finalPrice }}
+                <span class="slide-price-new">
+                    {{ $finalPrice }}{{ if not (findRE "₫|đ" $finalPrice) }}₫{{ end }}
+                </span>
+            {{ end }}
+
+            {{ if .Params.price_old }}
+                <span class="slide-price-old">{{ .Params.price_old }}</span>
+            {{ end }}
+        </div>
+        
+        <a href="{{ .RelPermalink }}" class="btn-shop">Xem Chi Tiết</a>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+
+  <a class="prev" onclick="plusSlides(-1)">
+      <i class="fa-solid fa-chevron-left"></i>
+  </a>
+  <a class="next" onclick="plusSlides(1)">
+      <i class="fa-solid fa-chevron-right"></i>
+  </a>
+
+  <div class="dot-container">
+    {{ range $index, $element := first 5 (where .Site.RegularPages "Section" "products") }}
+      <span class="dot" onclick="currentSlide({{ add $index 1 }})"></span>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+/* Container */
+.slideshow-container {
+  max-width: 800px;
+  position: relative;
+  margin: 40px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.mySlides { display: none; }
+
+.slide-content {
+    position: relative;
+    width: 100%;
+    height: 450px;
+}
+
+.slide-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Overlay */
+.text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  box-sizing: border-box; 
+}
+
+/* Title */
+.slide-title { 
+    margin: 0 0 5px 0 !important; 
+    font-size: 20px !important; 
+    font-weight: 500 !important;
+    color: #fff !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Price */
+.slideshow-price-box { margin-bottom: 15px; }
+
+.slide-price-new {
+    color: #ffc107;
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.slide-price-old {
+    color: #ccc;
+    text-decoration: line-through;
+    font-size: 14px;
+}
+
+/* Buttons */
+.btn-shop {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: white;
+  padding: 8px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  display: inline-block;
+  transition: all 0.3s;
+}
+
+.btn-shop:hover { 
+    background-color: #ffc107; 
+    border-color: #ffc107;
+    color: #000;
+}
+
+/* === UPDATED ARROWS (Smaller Size) === */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  /* Size reduced to 30px */
+  width: 10px !important;
+  height: 10px !important;
+  font-size: 12px !important; /* Smaller icon */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.prev:hover, .next:hover {
+  background-color: #ffc107;
+  color: #000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Dots */
+.dot-container { text-align:center; margin-top: 15px; }
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+.active, .dot:hover { background-color: #717171; }
+
+.fade { animation-name: fade; animation-duration: 1.5s; }
+@keyframes fade { from {opacity: .4} to {opacity: 1} }
+</style>

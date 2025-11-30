@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<header class="header">
+  <div class="container header-inner">
+
+    <a href="/" class="logo">Meow Gear</a>
+
+    <nav class="nav">
+      <a href="/products">Sản phẩm</a>
+      <a href="/about">Giới thiệu</a>
+    </nav>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." onkeyup="searchProducts()">
+      <div id="searchResults" class="search-results"></div>
+    </div>
+      
+    <div class="header-right-actions">
+        
+        <a href="/login/" id="login-link" class="login-link" style="margin-right: 20px;">
+            <i class="fa-solid fa-user"></i>
+            <span class="login-text">Đăng nhập</span>
+        </a>
+
+        <div id="user-info" style="display: none; align-items: center; gap: 8px; margin-right: 15px;">
+            <img id="user-avatar" src="" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd;">
+            <span id="user-name" style="font-weight: 600; font-size: 13px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">User</span>
+            
+            <button onclick="logout()" title="Đăng xuất" style="background: none; border: none; cursor: pointer; color: #999; padding: 0 5px;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+
+        <a href="/cart" class="cart-icon" aria-label="Shopping Cart">
+            <i class="fa-solid fa-bag-shopping"></i> 
+            <span id="cart-count">0</span> 
+        </a>
+
+    </div>
+
+    <script>
+    // --- PHẦN 1: LOGIC ĐĂNG NHẬP / AVATAR ---
+    function checkLogin() {
+        const userStr = localStorage.getItem('user_info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            // Ẩn nút Đăng nhập
+            document.getElementById('login-link').style.display = 'none';
+            // Hiện Avatar
+            document.getElementById('user-info').style.display = 'flex';
+            document.getElementById('user-name').innerText = user.name || "Khách";
+            document.getElementById('user-avatar').src = user.photo || "https://ui-avatars.com/api/?name=" + user.name;
+        }
+    }
+
+    function logout() {
+        if(confirm('Bạn có chắc muốn đăng xuất?')) {
+            localStorage.removeItem('user_info');
+            window.location.href = "/"; 
+        }
+    }
+
+    // Chạy kiểm tra ngay khi load web
+    checkLogin();
+
+    // --- PHẦN 2: LOGIC TÌM KIẾM SẢN PHẨM ---
+    let products = [];
+    fetch('/index.json').then(res => res.json()).then(data => { products = data; });
+
+    function searchProducts() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const resultsDiv = document.getElementById('searchResults');
+        resultsDiv.innerHTML = ''; 
+
+        if (input.length < 2) { 
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        const filtered = products.filter(item => item.title.toLowerCase().includes(input));
+
+        if (filtered.length > 0) {
+            resultsDiv.style.display = 'block';
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.innerHTML = `
+                    <a href="${item.permalink}" style="display: flex; align-items: center; text-decoration: none; color: black;">
+                        <img src="${item.image}" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">${item.title}</div>
+                            <div style="color: red; font-size: 12px;">${item.price ? item.price + ' đ' : ''}</div>
+                        </div>
+                    </a>`;
+                resultsDiv.appendChild(div);
+            });
+        } else {
+            resultsDiv.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-box')) {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+    });
+    </script>
+
+  </div>
+</header>

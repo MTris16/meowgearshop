@@ -1,0 +1,1607 @@
+body {
+    /* Keep existing styles */
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    
+    /* --- CRITICAL STICKY FOOTER RULES --- */
+    display: flex; 
+    flex-direction: column; /* Stack header, main, footer vertically */
+    min-height: 100vh; /* Make body at least as tall as the browser window */
+}
+main {
+    flex-grow: 1; /* Pushes the footer down */
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0; 
+}
+/* Header */
+.header {
+    background: #ffffff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 66px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    text-decoration: none;
+}
+
+.nav a {
+    margin: 0 14px;
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+}
+
+.nav a:hover {
+    color: #000;
+}
+
+.search-input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 180px;
+}
+/* Hero Banner */
+.hero {
+    background: #0073e6;
+    color: #fff;
+    padding: 50px 0;
+    text-align: center;
+}
+
+/* PRODUCT GRID */
+/* Product Grid */
+.product-grid {
+    display: grid;
+    /* KEEP: Ensures 300px min width columns */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    /* KEEP: Horizontal/Vertical spacing between cards */
+    gap: 40px; 
+    align-items: center;
+    /* --- ADD THESE LINES TO CONTROL WIDTH AND CENTERING --- */
+    max-width: 2000px; /* <--- Adjust this value (e.g., 1000px, 1100px) */
+}
+/* PRODUCT CARD */
+.product-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #eee;
+    transition: 0.2s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0px 8px 22px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+}
+
+.thumb-box {
+    position: relative;
+}
+
+.thumb-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff5722;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 12px 0 6px;
+    color: #222;
+}
+
+.price-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e53935;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Footer */
+.site-footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+    .product-card { width: calc(50% - 20px); }
+}
+@media(max-width: 600px) {
+    .product-card { width: 100%; }
+    .main-nav ul { flex-direction: column; gap: 10px; }
+}
+
+.filter-sort-bar {
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filter-sort-bar a {
+    margin-left: 12px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.filter-sort-bar a:hover {
+    text-decoration: underline;
+}
+
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.product-gallery .main-image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product-gallery .thumbs {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.product-gallery .thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.product-info .price {
+    margin: 15px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.product-info .old {
+    text-decoration: line-through;
+    color: #777;
+    margin-left: 10px;
+}
+
+.add-to-cart {
+    display: inline-block;
+    padding: 14px 24px;
+    background: #ff6600;
+    color: white;
+    border-radius: 6px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.product-specs,
+.product-description {
+    margin-top: 40px;
+}
+
+.related .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* =========================
+        HEADER
+========================= */
+header {
+    width: 100%;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 1px solid #eee;
+}
+
+header.sticky {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.topbar {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.search input {
+    width: 450px;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.cart-icon {
+    font-size: 20px;
+    position: relative;
+    margin-right: 22px;
+}
+
+.cart-count {
+    background: #ff6600;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    right: -12px;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.main-menu ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.main-menu li {
+    position: relative;
+    padding: 14px 0;
+}
+
+.main-menu a {
+    color: #333;
+    font-size: 17px;
+}
+
+/* Mega menu */
+.has-mega:hover .mega {
+    display: flex;
+}
+
+.mega {
+    display: none;
+    position: absolute;
+    left: 0;
+    background: white;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    top: 100%;
+    width: 750px;
+    gap: 40px;
+}
+
+.mega-col h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.mega-col a {
+    display: block;
+    padding: 4px 0;
+    color: #555;
+}
+
+.img-box img {
+    width: 230px;
+    border-radius: 8px;
+}
+
+/* Mobile menu */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.mobile-menu a {
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+    .main-menu { display: none; }
+    .search input { width: 200px; }
+    .menu-toggle { display: block; }
+    .mobile-menu { display: none; }
+    .mobile-menu.active { display: flex; }
+}
+
+.cart-page h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.cart-table th, .cart-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-table th {
+    background: #f5f5f5;
+}
+
+.cart-table td img {
+    width: 80px;
+    border-radius: 8px;
+}
+
+.cart-summary {
+    margin-top: 20px;
+    text-align: right;
+}
+
+#checkout-btn {
+    background: #ff6600;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#checkout-btn:hover {
+    background: #e55b00;
+}
+.footer {
+  /* 1. Background Color: A bright orange */
+  background-color: #ff5722; /* A common, vibrant orange shade */
+  /* 2. Text Color: White */
+  color: #ffffff; /* White color for all text inside the footer */
+  
+  /* 3. Padding for space above and below the content */
+  padding: 40px 0; 
+}
+
+/* Ensure links also appear white */
+.footer a {
+  color: #ffffff;
+  /* Optional: Remove the default underline */
+  text-decoration: none; 
+}
+
+/* Add a slight hover effect to links */
+.footer a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* Ensure the copyright text uses the background color as well */
+.copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Light separator line */
+  padding-top: 15px;
+  margin-top: 20px;
+  text-align: center; /* Center the copyright text */
+}
+.footer-inner {
+  display: flex; /* Enable Flexbox for horizontal arrangement */
+  justify-content: space-between; /* Distribute space evenly between columns */
+  max-width: 1200px; /* Optional: Limit the width of the content */
+  margin: 0 auto; /* Center the content container */
+  padding: 0 20px; /* Add padding on the sides */
+}
+
+/* --- 1. Base Colors & Links (Ensure links are white) --- */
+.footer {
+  /* Vibrant Orange Background */
+  background-color: #ff5722; 
+  /* White Text Color for everything inside */
+  color: #ffffff; 
+}
+
+.footer a {
+  color: #ffffff; /* This is crucial for icon visibility */
+  text-decoration: none; 
+}
+
+/* --- 2. Social Media Icons Styling --- */
+
+/* This rule makes the icons line up horizontally */
+.social-icons-wrapper {
+  display: flex;
+  gap: 20px; /* Space between icons */
+  margin-top: 15px; /* Space below the H4 title */
+}
+
+/* This rule controls the size and visibility of the icons themselves */
+.social-icons-wrapper a {
+  font-size: 26px; /* Makes the icons large enough to see */
+  line-height: 1; /* Helps vertical alignment */
+}
+/* Target the links inside the 'links' column of the footer */
+.col.links a {
+  /* Change links from inline (default) to block to force a line break after each one */
+  display: block; 
+  /* Add some vertical space between the links */
+  margin-bottom: 5px; 
+  /* Reset link color if needed, though it should inherit white from .footer */
+  color: #ffffff; 
+}/* CSS to make the footer links stack vertically */
+.footer .col.links a {
+    display: block;
+    margin-bottom: 5px; /* Optional: adds a little vertical space between the links */
+}
+/* 1. Ensure the right box aligns items horizontally */
+.header-inner .right-box {
+    display: flex;
+    align-items: center; /* Vertically centers the items */
+    gap: 15px; /* Adds space between the search bar and the cart icon */
+}
+
+/* 2. Style the cart icon link */
+.cart-icon-link {
+    color: #333; /* Set a default color */
+    font-size: 1.7em; /* Make the icon size appropriate */
+    text-decoration: none; /* Remove underline */
+    position: relative; /* Needed for positioning the count badge */
+}
+
+/* 3. Style the cart count (the red badge) */
+.cart-count {
+    position: absolute;
+    top: -5px; /* Adjust vertical position */
+    right: -10px; /* Adjust horizontal position */
+    background-color: #ff5722; /* A contrasting color, e.g., orange/red */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7em;
+    line-height: 1;
+    min-width: 15px;
+    text-align: center;
+}
+/* Gives content room and centers it */
+.hero-section {
+    background: #ff5722;
+    color: #fff;
+    padding: 60px 20px; /* Ensure side padding here too */
+    text-align: center;
+}
+.hero-title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+.hero-subtitle {
+    font-size: 1.2em;
+    color: #f0f0f0; /* Lighter text for contrast on blue */
+}
+.product-listing-section {
+    padding: 40px 0;
+}
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures image doesn't leak out of corners */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Nice hover effect */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.product-image {
+    height: 200px;
+    background-color: #f8f8f8; /* Placeholder background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-info {
+    /* Reduced vertical padding from 15px/20px to 10px */
+    padding: 10px 15px; /* Top/Bottom padding is now 10px, Left/Right is 15px */
+    text-align: center;
+}
+/* Section Spacing */
+.products-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+
+/* Card Style */
+.product-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Image Styling */
+.card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Ensures images cover the box without stretching */
+}
+
+/* Text Styling */
+.card-details {
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.card-price {
+    color: #e74c3c; /* Red/Orange for price */
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+/* Button Styling */
+.btn-view {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-view:hover {
+    background-color: #e74c3c;
+}
+/* === ADD THIS TO static/css/style.css === */
+
+/* 1. Spacing for the whole section */
+.products-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+/* 2. The Grid Layout - This makes them sit side-by-side */
+
+/* 3. The Individual Card */
+.product-card {
+    background: white;
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* 4. Images */
+.card-image img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover;
+    display: block;
+}
+
+/* 5. Text Content */
+.card-details {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-title {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.card-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.card-price {
+    color: #d32f2f; /* Red color for price */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 6. Button */
+.btn-view {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.btn-view:hover {
+    background-color: #555;
+}
+.filter-sort-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.filter-sort-bar a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.filter-sort-bar a:hover {
+    color: #ff5722; /* Orange hover */
+}
+/* Cart Page Styling */
+.cart-page {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 50vh;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.cart-table th {
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    padding: 10px;
+}
+
+.cart-table td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.cart-summary {
+    text-align: right;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.cart-total-row {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.btn-checkout {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-checkout:hover {
+    background-color: #e64a19;
+}
+/* --- CART PAGE STYLING --- */
+
+.cart-page-container {
+    padding: 40px 20px;
+    max-width: 1200px; /* Wider container for cart */
+    margin: 0 auto;
+    min-height: 60vh;
+}
+
+.page-title {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+/* Flex Container for Layout */
+.cart-content-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* LEFT SIDE: Items Table */
+.cart-items-section {
+    flex: 2; /* Takes up 2/3rds of space */
+    width: 100%;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th {
+    text-align: left;
+    padding: 15px 0;
+    border-bottom: 2px solid #ddd;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.cart-table td {
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* Product Column */
+.product-col {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-col img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.p-name {
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+/* Quantity Input */
+.qty-col input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Remove Button */
+.remove-col button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+.remove-col button:hover { color: #d32f2f; }
+
+/* RIGHT SIDE: Summary Box */
+.cart-summary-box {
+    flex: 1; /* Takes up 1/3rd of space */
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    position: sticky;
+    top: 20px; /* Sticks when scrolling */
+}
+
+.cart-summary-box h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.summary-row.total {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #333;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+}
+
+.btn-checkout {
+    width: 100%;
+    background-color: #ff5722;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    text-transform: uppercase;
+    transition: background 0.3s;
+}
+
+.btn-checkout:hover {
+    background-color: #e64a19;
+}
+
+/* Responsive: Stack columns on mobile */
+@media (max-width: 768px) {
+    .cart-content-wrapper {
+        flex-direction: column;
+    }
+    .cart-summary-box {
+        width: 100%;
+    }
+}
+
+#cart-count {
+    /* 1. Vị trí */
+    position: absolute;
+    top: -8px;
+    right: -10px;
+
+    /* 2. Giao diện */
+    background-color: #ff5722;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px; /* Hình viên thuốc */
+    
+    /* 3. Kích thước cố định */
+    height: 20px;
+    min-width: 20px;
+    padding: 0 4px;
+    box-sizing: border-box;
+
+    /* 4. FONT CHỮ (Quan trọng: dùng Arial cho chuẩn số) */
+    font-family: Arial, sans-serif; 
+    font-size: 11px;
+    font-weight: bold;
+
+    /* 5. CĂN GIỮA BẰNG GRID (Mạnh hơn Flexbox) */
+    display: grid;
+    place-items: center;       /* Lệnh này căn giữa cả ngang và dọc */
+    align-content: center;     /* Ép nội dung vào giữa khung */
+    
+    /* 6. RESET DÒNG (Để tránh bị đẩy lên/xuống) */
+    line-height: 1;            
+    margin: 0;
+}
+
+.cart-icon-link {
+    position: relative;
+    display: inline-block;
+}
+/* --- Cart Page Layout Fixes --- */
+
+/* 1. Main container setup for content and summary */
+.cart-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 2. Flex layout for table and summary side-by-side */
+#cart-content-wrapper {
+    display: flex;
+    gap: 30px; /* Space between the table and the summary */
+    align-items: flex-start;
+}
+
+.cart-table-wrapper {
+    flex: 2; /* Takes up more space (e.g., 66%) */
+    min-width: 600px;
+}
+
+/* 3. Table styling */
+.cart-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-table-wrapper th, 
+.cart-table-wrapper td {
+    padding: 15px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap; /* Prevent breaking table headers/data */
+}
+
+.cart-table-wrapper thead th {
+    font-weight: bold;
+    color: #333;
+    border-top: 1px solid #ddd;
+}
+
+/* Specific column widths */
+.cart-table-wrapper th:nth-child(1), .cart-table-wrapper td:nth-child(1) { /* Sản phẩm */
+    width: 40%;
+}
+.cart-table-wrapper th:nth-child(2), .cart-table-wrapper td:nth-child(2) { /* Đơn giá */
+    width: 20%;
+}
+.cart-table-wrapper th:nth-child(3), .cart-table-wrapper td:nth-child(3) { /* Số lượng */
+    width: 15%;
+}
+.cart-table-wrapper th:nth-child(4), .cart-table-wrapper td:nth-child(4) { /* Thành tiền */
+    width: 20%;
+}
+.cart-table-wrapper th:nth-child(5), .cart-table-wrapper td:nth-child(5) { /* Xóa */
+    width: 5%;
+    text-align: center;
+}
+
+/* Product column content alignment */
+.product-col {
+    display: flex;
+    align-items: center;
+}
+
+/* Input field cleanup */
+.cart-table-wrapper input[type="number"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 4. Cart Summary Styling */
+.cart-summary {
+    flex: 1; /* Takes up less space (e.g., 33%) */
+    background: #f8f8f8;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.cart-summary h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total-line {
+    font-weight: bold;
+    font-size: 1.1em;
+    border-top: 1px dashed #ccc;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff6600; /* Matching your theme color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.checkout-button:hover {
+    background-color: #e65c00;
+}
+/* --- HOMEPAGE SPECIFIC STYLING --- */
+
+/* Hero Section (A simple version to start) */
+.homepage-hero-section {
+    background-color: #007bff; /* Blue background matching your old banner */
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.hero-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #ff6600; /* Orange CTA button */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #e65c00;
+}
+
+/* Product Grid/Card Layout */
+.product-list-container {
+    padding: 40px 0; /* Original value */
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-card img {
+    width: 100%;
+    /* ⬇️ DECREASED HEIGHT HERE ⬇️ */
+    height: 170px; 
+    object-fit: cover;
+    display: block;
+}
+
+.product-card .no-image {
+    background-color: #f0f0f0;
+    text-align: center;
+    line-height: 200px;
+    color: #999;
+}
+
+.product-info {
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.product-info h3 {
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-info .price-new {
+    font-weight: bold;
+    color: #ff6600; /* Highlight new price */
+    font-size: 1.1em;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.product-info .price-old {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+    display: inline-block;
+}
+/* --- Single Product Page (single.html) Styling --- */
+
+.product-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.product-detail-container h1 {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+/* Flexbox layout for images and info */
+.product-content-wrapper {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+    align-items: flex-start; /* Aligns content to the top */
+}
+
+/* Images take up about half the space */
+.product-images {
+    flex: 1; 
+    max-width: 50%;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.main-product-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+/* Info takes up the other half */
+
+.product-price {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.price-new {
+    color: #ff6600; /* Primary color for new price */
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.8em;
+}
+
+.product-short-desc {
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Add to Cart Button Styling */
+.add-to-cart-button {
+    padding: 12px 30px;
+    background-color: #007bff; /* Use a strong color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-button:hover {
+    background-color: #0056b3;
+}
+
+/* Full Description */
+.product-full-description {
+    border-top: 1px solid #ddd;
+    padding-top: 30px;
+}
+
+.product-full-description h2 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+}
+/* --- SLIDESHOW CSS --- */
+
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: 40px auto; /* Center the slideshow */
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.mySlides {
+    display: none; /* Hide all slides by default */
+}
+
+.mySlides img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.slideshow-caption {
+    color: #f2f2f2;
+    font-size: 1.5em;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+/* --- SLIDESHOW CSS --- */
+.featured-products-section {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.slideshow-container {
+    max-width: 1000px; /* Adjust width as desired */
+    position: relative;
+    margin: 40px auto; /* Center the slideshow */
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.mySlides {
+    display: none; /* Hides all slides by default */
+}
+
+.mySlides img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.slideshow-placeholder {
+    height: 400px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.slideshow-caption {
+    color: #f2f2f2;
+    font-size: 1.5em;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+/* ============================================ */
+/* FIX: PRODUCT PAGE TITLE (Force Single Line)  */
+/* ============================================ */
+/* ===================================================== */
+/* FINAL FIX: FORCE PRODUCT CARD TO LOOK LIKE PICTURE 1  */
+/* ===================================================== */
+
+.product-card {
+    /* 1. Remove the gap inside the box so image touches edges */
+    padding: 0 !important; 
+    
+    /* 2. Fix the border and corners */
+    border: 1px solid #eee !important;
+    border-radius: 8px !important; /* Sharper corners (was 14px) */
+    
+    /* 3. ensure background is white */
+    background: #fff !important;
+    overflow: hidden !important;
+    
+    /* 4. Layout */
+    display: flex !important;
+    flex-direction: column !important;
+    transition: box-shadow 0.3s ease !important;
+}
+
+.product-card:hover {
+    /* 5. Nice shadow on hover */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Image Box */
+.image-wrapper {
+    height: 200px !important;
+    width: 100% !important;
+    background: #f9f9f9 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 0 !important; /* Resets any old radius on the wrapper */
+    margin: 0 !important;
+}
+
+.image-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0 !important; /* Ensures image has sharp corners to fit the box */
+    transition: transform 0.3s ease !important;
+}
+
+.product-card:hover .image-wrapper img {
+    transform: scale(1.05) !important;
+}
+
+/* Text Area */
+.product-info {
+    padding: 15px !important;
+    text-align: left !important;
+}
+
+.product-title {
+    font-size: 16px !important;
+    margin: 0 0 8px 0 !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    min-height: 40px !important;
+}
+
+/* Price Styling */
+.price-box {
+    margin-top: 5px !important;
+}
+
+.current-price {
+    /* Color is handled by HTML, this handles the font */
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+}
+
+.old-price {
+    text-decoration: line-through !important;
+    color: #999 !important;
+    font-size: 0.85em !important;
+    margin-left: 8px !important;
+    font-weight: normal !important;
+}
+/* ========================================= */
+/* CUSTOMER REVIEWS SECTION (FIXED)          */
+/* ========================================= */
+
+/* 1. The Gray Background Strip */
+.reviews-section-wrapper {
+    background-color: #f5f5f5; /* Light Gray Background */
+    padding: 60px 0;
+    margin-top: 50px;
+    width: 100%;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* 2. The Grid Layout */
+.reviews-grid {
+    display: grid;
+    /* Force 3 columns on desktop, min 300px width */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* 3. The Card Style */
+.review-card {
+    background: #ffffff; /* White Card */
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #eee; /* Subtle border */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Soft Shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Make them equal height */
+}
+
+.stars {
+    color: #ffc107; /* Gold stars */
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.review-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #f5f5f5;
+    padding-top: 15px;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    background: #ff5722;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.name-box .name {
+    font-weight: bold;
+    color: #333;
+    display: block;
+}
+
+.name-box .verified {
+    font-size: 12px;
+    color: #28a745; /* Green */
+    display: block;
+}

@@ -1,0 +1,272 @@
+/* --- CSS CHO NÚT HOTLINE NỔI --- */
+
+/* 1. Cấu trúc chính của nút */
+.floating-hotline {
+    position: fixed; /* Quan trọng: Giữ nút đứng yên khi cuộn trang */
+    bottom: 20px;    /* Cách đáy 20px */
+    left: 20px;      /* Cách lề trái 20px (Giống hình mẫu) */
+    z-index: 9999;   /* Luôn nổi lên trên cùng */
+    
+    display: flex;
+    align-items: center;
+    background-color: #e62e04; /* Màu đỏ nổi bật */
+    color: white;
+    text-decoration: none;
+    border-radius: 40px;
+    padding-right: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    
+    /* Hiệu ứng chuyển động mượt */
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* 2. Phần Icon tròn tròn */
+.hotline-icon {
+    width: 50px;
+    height: 50px;
+    background: #c31d00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    
+    /* Tạo hiệu ứng rung lắc */
+    animation: phone-shake 1.5s infinite ease-in-out;
+}
+
+.hotline-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* 3. Phần chữ bên cạnh */
+.hotline-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.hotline-text span {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.hotline-text strong {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 4. Hiệu ứng Hover (Di chuột vào) */
+.floating-hotline:hover {
+    transform: scale(1.05); /* Phóng to nhẹ */
+    box-shadow: 0 6px 15px rgba(230, 46, 4, 0.4);
+}
+
+/* 5. Tạo vòng tròn tỏa ra (Animation) */
+.floating-hotline::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(230, 46, 4, 0.4);
+    border-radius: 40px;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    animation: pulse-ring 2s infinite;
+}
+
+/* --- ĐỊNH NGHĨA CHUYỂN ĐỘNG (KEYFRAMES) --- */
+
+/* Rung lắc điện thoại */
+@keyframes phone-shake {
+    0% { transform: rotate(0) scale(1) skew(1deg); }
+    10% { transform: rotate(-25deg) scale(1) skew(1deg); }
+    20% { transform: rotate(25deg) scale(1) skew(1deg); }
+    30% { transform: rotate(-25deg) scale(1) skew(1deg); }
+    40% { transform: rotate(25deg) scale(1) skew(1deg); }
+    50% { transform: rotate(0) scale(1) skew(1deg); }
+    100% { transform: rotate(0) scale(1) skew(1deg); }
+}
+
+/* Vòng tròn tỏa ra */
+@keyframes pulse-ring {
+    0% { transform: scale(0.9); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- CSS CHO CỤM NÚT ZALO/MESSENGER BÊN PHẢI --- */
+
+.social-floating {
+    position: fixed;
+    bottom: 20px;   /* Cách đáy 20px (bằng với hotline bên kia cho cân) */
+    right: 20px;    /* Nằm bên PHẢI */
+    z-index: 9999;
+    
+    display: flex;
+    flex-direction: column-reverse; /* Xếp ngược: Cái nào viết sau trong HTML sẽ nằm dưới cùng */
+    gap: 15px;      /* Khoảng cách giữa 2 nút */
+}
+
+.social-btn {
+    width: 50px;    /* Kích thước nút */
+    height: 50px;
+    border-radius: 50%; /* Bo tròn */
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden; /* Cắt ảnh thừa nếu có */
+}
+
+.social-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung tròn */
+}
+
+/* Hiệu ứng khi di chuột vào: Phóng to lên xíu */
+.social-btn:hover {
+    transform: scale(1.1);
+}
+
+/* --- Hiệu ứng toả sóng riêng cho từng nút --- */
+
+/* Màu xanh dương của Zalo */
+.zalo-btn {
+    animation: pulse-blue 2s infinite;
+}
+
+/* Màu xanh tím của Messenger (hoặc xanh dương nhạt) */
+.messenger-btn {
+    animation: pulse-blue 2s infinite;
+    animation-delay: 1s; /* Rung chậm hơn Zalo 1 nhịp cho vui mắt */
+}
+
+/* Định nghĩa hiệu ứng toả sóng xanh */
+@keyframes pulse-blue {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 132, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(0, 132, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 132, 255, 0);
+    }
+}
+
+/* Nút Shopee Cart */
+.btn-shopee-cart {
+    position: absolute;
+    bottom: 10px;  /* Cách đáy ảnh 10px */
+    right: 10px;   /* Cách phải ảnh 10px */
+    
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Tròn vo */
+    background-color: #ee4d2d; /* Màu cam Shopee */
+    color: white;
+    border: none;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    
+    /* MẶC ĐỊNH: Ẩn đi và thụt xuống dưới một chút */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px); /* Đẩy xuống 10px */
+    transition: all 0.3s ease;   /* Hiệu ứng mượt */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Chỉnh kích thước icon bên trong */
+.btn-shopee-cart svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* HIỆU ỨNG HOVER: Di chuột vào KHUNG ẢNH thì nút hiện lên */
+.image-wrapper:hover .btn-shopee-cart {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Trượt lên vị trí gốc */
+}
+
+/* Hover vào chính cái nút thì đậm màu hơn */
+.btn-shopee-cart:hover {
+    background-color: #d73211;
+    transform: scale(1.1); /* Phóng to nhẹ */
+}
+
+/* === FIX LỖI SKIBIDI GIỎ HÀNG & LOGIN (FINAL) === */
+
+/* 1. Cái khung bao quanh cả 2 nút */
+.header-right-actions {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc (Quan trọng) */
+    gap: 20px; /* Khoảng cách giữa 2 nút */
+    height: 100%; /* Ăn theo chiều cao Header */
+}
+
+/* 2. Chỉnh lại nút Đăng nhập cho ngay ngắn */
+.login-link {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    height: 40px; /* Ép chiều cao cố định */
+}
+
+/* 3. Chỉnh lại nút Giỏ hàng (Tâm điểm lỗi) */
+.cart-icon {
+    position: relative;
+    display: flex;         /* Dùng Flex để căn cái túi vào giữa */
+    align-items: center;     /* Căn giữa dọc */
+    justify-content: center; /* Căn giữa ngang */
+    
+    width: 40px;  /* Tạo một cái hộp vuông 40x40 cho nó ngồi */
+    height: 40px; 
+    
+    font-size: 20px; /* Kích thước cái túi */
+    color: #333;
+    text-decoration: none;
+}
+
+/* 4. Chỉnh lại cái số đỏ đỏ (Cho nó bám dính vào góc cái hộp 40px) */
+#cart-count {
+    /* Vị trí */
+    position: absolute;
+    top: 0px;     /* Đẩy sát lên mép trên của hộp */
+    right: -5px;  /* Đẩy sát sang mép phải */
+
+    /* Giao diện số (Code cũ chuẩn rồi, giữ nguyên) */
+    background-color: #ff5722;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    height: 20px;
+    min-width: 20px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; 
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;     
+    justify-content: center; 
+    line-height: 1;      
+    padding: 0 4px;      
+    padding-top: 2px;    
+}

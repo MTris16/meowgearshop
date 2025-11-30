@@ -1,0 +1,68 @@
+{{ define "main" }}
+
+<h1>{{ .Title }}</h1>
+<div class="filter-sort-bar">
+  <div class="sort">
+    <strong>Sắp xếp:</strong>
+      <a href="{{ .RelPermalink }}?sort=price_asc" class="sort-btn" data-sort="price_asc">Giá tăng</a>
+      <a href="{{ .RelPermalink }}?sort=price_desc" class="sort-btn" data-sort="price_desc">Giá giảm</a>
+      <a href="{{ .RelPermalink }}?sort=new" class="sort-btn" data-sort="new">Mới nhất</a>
+  </div>
+
+<div class="filter">
+    <strong>Lọc:</strong>
+
+    <a href="{{ "/categories/keyboard/" | relURL }}">Bàn phím</a>
+
+    <a href="{{ "/categories/switch/" | relURL }}">Switch</a>
+
+    <a href="{{ "/categories/keycap/" | relURL }}">Keycap</a>
+
+    <a href="{{ "/products/" | relURL }}">(Tất cả)</a>
+</div>
+      
+</div>
+
+<div class="product-grid" id="product-grid">
+  {{ range .Pages }}
+    {{ partial "product-cart.html" . }}
+  {{ end }} 
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortType = urlParams.get('sort');
+    const grid = document.getElementById('product-grid');
+    const products = Array.from(grid.getElementsByClassName('product-card'));
+
+    function getPrice(element) {
+        const priceRaw = element.getAttribute('data-price');
+        const priceClean = priceRaw.replace(/[^0-9]/g, ''); 
+        return parseFloat(priceClean) || 0;
+    }
+
+    if (sortType === 'price_asc') {
+        products.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (sortType === 'price_desc') {
+        products.sort((a, b) => getPrice(b) - getPrice(a));
+    } else if (sortType === 'new') {
+        products.sort((a, b) => {
+            return b.getAttribute('data-date') - a.getAttribute('data-date');
+        });
+    }
+
+    if (sortType) {
+        grid.innerHTML = '';
+        products.forEach(product => grid.appendChild(product));
+        
+        // Optional: Add 'active' class to the current sort link
+        document.querySelectorAll(`.sort-btn[href*="${sortType}"]`).forEach(btn => {
+            btn.style.fontWeight = 'bold';
+            btn.style.color = '#ff5722'; // Chỉnh màu 
+        });
+    }
+});
+</script>
+
+{{ end }}
