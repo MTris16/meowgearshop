@@ -1,7 +1,7 @@
 baseURL = "/"
 languageCode = "en-us"
 title = "Con meo ngu ngoc dang yeu"
-theme = ""
+theme = "ananke"
 enableRobotsTXT = true
 
 [params]
